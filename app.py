@@ -123,9 +123,9 @@ if uploaded_files:
             'Db SIPADAN', 'Cr SIPADAN', 'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total', 'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB', 'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
             ]
  # Tambahkan kolom yang mungkin belum ada dalam DataFrame
-    for col in desired_order:
-        if col not in df_tlp.columns:
-            df_tlp[col] = 0
+        for col in desired_order:
+            if col not in df_tlp.columns:
+                df_tlp[col] = 0
 
         df_tlp = df_tlp[desired_order]
         
