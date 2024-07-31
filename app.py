@@ -20,25 +20,8 @@ if uploaded_files:
     if 'TAK.xlsx' in dfs:
         df1 = dfs['TAK.xlsx']
     
-        new_columns1 = [
-                'DEBIT_PINJAMAN UMUM',
-                'DEBIT_PINJAMAN RENOVASI RUMAH',
-                'DEBIT_PINJAMAN SANITASI',
-                'DEBIT_PINJAMAN ARTA',
-                'DEBIT_PINJAMAN MIKROBISNIS',
-                'DEBIT_PINJAMAN DT. PENDIDIKAN',
-                'DEBIT_PINJAMAN PERTANIAN',
-                'DEBIT_TOTAL',
-                'CREDIT_PINJAMAN UMUM',
-                'CREDIT_PINJAMAN RENOVASI RUMAH',
-                'CREDIT_PINJAMAN SANITASI',
-                'CREDIT_PINJAMAN ARTA',
-                'CREDIT_PINJAMAN MIKROBISNIS',
-                'CREDIT_PINJAMAN DT. PENDIDIKAN',
-                'CREDIT_PINJAMAN PERTANIAN',
-                'CREDIT_TOTAL'
-            ]
-
+        new_columns1 = ['DEBIT_PINJAMAN UMUM','DEBIT_PINJAMAN RENOVASI RUMAH','DEBIT_PINJAMAN SANITASI','DEBIT_PINJAMAN ARTA','DEBIT_PINJAMAN MIKROBISNIS','DEBIT_PINJAMAN DT. PENDIDIKAN','DEBIT_PINJAMAN PERTANIAN','DEBIT_TOTAL','CREDIT_PINJAMAN UMUM','CREDIT_PINJAMAN RENOVASI RUMAH','CREDIT_PINJAMAN SANITASI','CREDIT_PINJAMAN ARTA','CREDIT_PINJAMAN MIKROBISNIS','CREDIT_PINJAMAN DT. PENDIDIKAN','CREDIT_PINJAMAN PERTANIAN','CREDIT_TOTAL']
+        
         for col in new_columns1:
             if col not in df1.columns:
                 df1[col] = 0
