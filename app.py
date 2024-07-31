@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import io
+import glob
+import os
 
 st.title('Aplikasi Pengolahan THC')
 st.write("Ini digunakan untuk menyatukan file THC FINAL, TAK, TLP dan KDP")
@@ -23,6 +25,11 @@ if uploaded_files:
                 df[col] = 0
         
         return df[desired_order]
+
+    combined_df_list = []
+    
+    if 'THC FINAL.xlsx' in dfs:
+        df_thc = dfs['THC FINAL.xlsx']
 
     if 'TAK.xlsx' in dfs:
         df_tak = dfs['TAK.xlsx']
@@ -127,3 +134,12 @@ if uploaded_files:
         df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
         st.write("KDP FINAL:")
         st.write(df_kdp)
+
+
+if combined_df_list:
+    combined_df = pd.concat(combined_df_list, ignore_index=True)
+    st.write("Format data THC gabungan:")
+    st.write(combined_df)
+
+
+
