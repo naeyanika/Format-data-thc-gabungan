@@ -127,7 +127,7 @@ if uploaded_files:
             if col not in df_tlp.columns:
                 df_tlp[col] = 0
 
-            df_tlp = df_tlp[desired_order]
+        df_tlp = df_tlp[desired_order]
         
-            st.write("TLP FINAL:")
-            st.write(df_tlp)
+        st.write("TLP FINAL:")
+        st.write(df_tlp)
