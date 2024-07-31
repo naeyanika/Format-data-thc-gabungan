@@ -146,14 +146,14 @@ if uploaded_files:
     'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
     ]
 
-    # Menghapus koma dan titik pada kolom-kolom yang ditentukan
+#Menghapus koma dan titik pada kolom-kolom yang ditentukan
 for col in columns_to_replace:
     if col in combined_df.columns:
         combined_df[col] = combined_df[col].str.replace(',', '', regex=False)
         combined_df[col] = combined_df[col].str.replace('.', '', regex=False)
 
 
-    # Download links for pivot tables
+#Download links for pivot tables
 for name, df in {
         'Format data THC gabungan.xlsx': combined_df
 }.items():
