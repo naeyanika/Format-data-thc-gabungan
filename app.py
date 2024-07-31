@@ -116,7 +116,7 @@ if uploaded_files:
         'CREDIT_TOTAL': 'Cr Total'
     }
 
-    df_tlp = df_tlp.rename(columns=rename_dict)
+        df_tlp = df_tlp.rename(columns=rename_dict)
         
     desired_order = [
             'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE', 'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara', 'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok',
