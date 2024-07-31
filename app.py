@@ -140,8 +140,35 @@ if uploaded_files:
 
 if combined_df_list:
     combined_df = pd.concat(combined_df_list, ignore_index=True)
+
+    columns_to_replace = [
+    'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
+    'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
+    'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
+    'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
+    'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
+    ]
+
+# Mengganti koma dengan titik pada kolom-kolom yang ditentukan
+for col in columns_to_replace:
+    if col in combined_df.columns:
+        combined_df[col] = combined_df[col].str.replace(',', '.', regex=False)
+
+print(combined_df)
     st.write("Format data THC gabungan:")
     st.write(combined_df)
 
 
-
+    # Download links for pivot tables
+    for name, df in {
+        'Format data THC gabungan.xlsx': combined_df
+    }.items():
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+        buffer.seek(0)
+        st.download_button(
+            label=f"Unduh {name}",
+            data=buffer.getvalue(),
+            file_name=name,
+            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
