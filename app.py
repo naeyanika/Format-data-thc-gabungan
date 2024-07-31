@@ -7,49 +7,19 @@ import io
 st.title('Aplikasi Pengolahan THC')
 st.write("""Ini digunakan untuk menyatukan file THC FINAL, TAK, TLP dan KDP""")
 
-# Function to format numbers
-def format_no(no):
-    try:
-        if pd.notna(no):
-            return f'{int(no):02d}.'
-        else:
-            return ''
-    except (ValueError, TypeError):
-        return str(no)
-
-def format_center(center):
-    try:
-        if pd.notna(center):
-            return f'{int(center):03d}'
-        else:
-            return ''
-    except (ValueError, TypeError):
-        return str(center)
-
-def format_kelompok(kelompok):
-    try:
-        if pd.notna(kelompok):
-            return f'{int(kelompok):02d}'
-        else:
-            return ''
-    except (ValueError, TypeError):
-        return str(kelompok)
-
-# File upload
-uploaded_files = st.file_uploader("Unggah file CSV", accept_multiple_files=True)
+uploaded_files = st.file_uploader("Unggah file Excel", accept_multiple_files=True, type=["xlsx"])
 
 if uploaded_files:
-    # Read CSV files
     dfs = {}
     for file in uploaded_files:
-        df = pd.read_csv(file, delimiter=';', low_memory=False)
+        df = pd.read_excel(file, engine='openpyxl')  # Baca file Excel dengan pandas
         dfs[file.name] = df
 
-    # Process TAK
-    if 'DbSimpanan.csv' in dfs:
-        df1 = dfs['TAK.xlsx']
-        df1.columns = df1.columns.str.strip()
 
+    # Konversi data menjadi DataFrame
+    if 'TAK.xlsx' in dfs:
+        df1 = dfs['TAK.xlsx']
+    
         new_columns1 = [
                 'DEBIT_PINJAMAN UMUM',
                 'DEBIT_PINJAMAN RENOVASI RUMAH',
