@@ -94,7 +94,7 @@ if uploaded_files:
             df_tlp[col] = 0
 
         
-        rename_dict = {
+    rename_dict = {
         'KELOMPOK': 'KEL',
         'DEBIT_Simpanan Hari Raya': 'Db Sihara',
         'DEBIT_Simpanan Pensiun': 'Db Pensiun',
