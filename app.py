@@ -69,9 +69,9 @@ if uploaded_files:
                 'CREDIT_TOTAL'
             ]
 
-            for col in new_columns1:
-                if col not in df1.columns:
-                    df1[col] = 0
+        for col in new_columns1:
+            if col not in df1.columns:
+                df1[col] = 0
 
             rename_dict = {
                 'KELOMPOK': 'KEL',
