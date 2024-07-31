@@ -50,7 +50,7 @@ if uploaded_files:
         df1 = dfs['TAK.xlsx']
         df1.columns = df1.columns.str.strip()
 
-        new_columns = [
+        new_columns1 = [
                 'DEBIT_PINJAMAN UMUM',
                 'DEBIT_PINJAMAN RENOVASI RUMAH',
                 'DEBIT_PINJAMAN SANITASI',
@@ -69,7 +69,7 @@ if uploaded_files:
                 'CREDIT_TOTAL'
             ]
 
-            for col in new_columns4:
+            for col in new_columns1:
                 if col not in df1.columns:
                     df1[col] = 0
 
