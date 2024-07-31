@@ -91,3 +91,39 @@ if uploaded_files:
         df_tlp = process_dataframe(df_tlp, new_columns_tlp, rename_dict_tlp, desired_order_tlp)
         st.write("TLP FINAL:")
         st.write(df_tlp)
+
+
+    if 'KDP.xlsx' in dfs:
+        df_kdp = dfs['KDP.xlsx']
+        new_columns_kdp = [
+            'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
+            'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
+            'DEBIT_Simpanan Sipadan', 'DEBIT_Simpanan Khusus', 'CREDIT_Simpanan Pensiun',
+            'CREDIT_Simpanan Pokok', 'CREDIT_Simpanan Sukarela', 'CREDIT_Simpanan Wajib',
+            'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
+            'CREDIT_Simpanan Khusus'
+        ]
+        rename_dict_kdp = {
+            'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
+            'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
+            'DEBIT_Simpanan Sukarela': 'Db Sukarela', 'DEBIT_Simpanan Wajib': 'Db Wajib',
+            'DEBIT_Simpanan Qurban': 'Db Qurban', 'DEBIT_Simpanan Sipadan': 'Db SIPADAN',
+            'DEBIT_Simpanan Khusus': 'Db Khusus', 'DEBIT_TOTAL': 'Db Total',
+            'CREDIT_Simpanan Hari Raya': 'Cr Sihara', 'CREDIT_Simpanan Pensiun': 'Cr Pensiun',
+            'CREDIT_Simpanan Pokok': 'Cr Pokok', 'CREDIT_Simpanan Sukarela': 'Cr Sukarela',
+            'CREDIT_Simpanan Wajib': 'Cr Wajib', 'CREDIT_Simpanan Qurban': 'Cr Qurban',
+            'CREDIT_Simpanan Sipadan': 'Cr SIPADAN', 'CREDIT_Simpanan Khusus': 'Cr Khusus',
+            'CREDIT_TOTAL': 'Cr Total'
+        }
+        desired_order_kdp = [
+            'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
+            'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
+            'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
+            'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
+            'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
+            'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
+        ]
+
+        df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
+        st.write("KDP FINAL:")
+        st.write(df_kdp)
