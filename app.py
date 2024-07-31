@@ -148,9 +148,9 @@ if uploaded_files:
 
     # Menghapus koma dan titik pada kolom-kolom yang ditentukan
     for col in columns_to_replace:
-        if col in combined_df.columns:
-            combined_df[col] = combined_df[col].str.replace(',', '', regex=False)
-            combined_df[col] = combined_df[col].str.replace('.', '', regex=False)
+    if col in combined_df.columns:
+        combined_df[col] = combined_df[col].str.replace(',', '', regex=False)
+        combined_df[col] = combined_df[col].str.replace('.', '', regex=False)
 
 
     # Download links for pivot tables
