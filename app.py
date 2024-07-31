@@ -79,7 +79,14 @@ if uploaded_files:
             'CREDIT_Simpanan Sipadan': 'Cr SIPADAN', 'CREDIT_Simpanan Khusus': 'Cr Khusus',
             'CREDIT_TOTAL': 'Cr Total'
         }
-        desired_order_tlp = desired_order_tlp  # Sama dengan TAK
+        desired_order_tlp = [
+            'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
+            'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
+            'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
+            'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
+            'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
+            'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
+        ]
 
         df_tlp = process_dataframe(df_tlp, new_columns_tlp, rename_dict_tlp, desired_order_tlp)
         st.write("TLP FINAL:")
