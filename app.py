@@ -150,26 +150,33 @@ if uploaded_files:
 # Menggabungkan semua DataFrame
 combined_df = pd.concat(combined_df_list, ignore_index=True)
 
+# Fungsi untuk membersihkan dan mengkonversi kolom
+def clean_and_convert(value):
+    if pd.isna(value):
+        return value
+    value = str(value).replace(',', '').replace('.', '')
+    try:
+        return pd.to_numeric(value)
+    except ValueError:
+        return value
+
+# Membersihkan dan mengkonversi kolom-kolom yang ditentukan
 for col in columns_to_replace:
     if col in combined_df.columns:
-        combined_df[col] = combined_df[col].str.replace(',', '', regex=False)
-        combined_df[col] = combined_df[col].str.replace('.', '', regex=False)
-
+        combined_df[col] = combined_df[col].apply(clean_and_convert)
 
 st.write("Combined DataFrame:")
 st.write(combined_df)
 
-#Download links for pivot tables
-for name, df in {
-        'Format data THC gabungan.xlsx': combined_df
-}.items():
-    buffer = io.BytesIO()
-    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-        df.to_excel(writer, index=False, sheet_name='Sheet1')
-    buffer.seek(0)
-    st.download_button(
-        label=f"Unduh {name}",
-        data=buffer.getvalue(),
-        file_name=name,
-        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
+# Download links for pivot tables
+buffer = io.BytesIO()
+with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+    combined_df.to_excel(writer, index=False, sheet_name='Sheet1')
+buffer.seek(0)
+
+st.download_button(
+    label="Unduh Format data THC gabungan.xlsx",
+    data=buffer.getvalue(),
+    file_name='Format data THC gabungan.xlsx',
+    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+)
