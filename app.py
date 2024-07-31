@@ -147,23 +147,23 @@ if uploaded_files:
     ]
 
     # Menghapus koma dan titik pada kolom-kolom yang ditentukan
-    for col in columns_to_replace:
+for col in columns_to_replace:
     if col in combined_df.columns:
         combined_df[col] = combined_df[col].str.replace(',', '', regex=False)
         combined_df[col] = combined_df[col].str.replace('.', '', regex=False)
 
 
     # Download links for pivot tables
-    for name, df in {
+for name, df in {
         'Format data THC gabungan.xlsx': combined_df
-    }.items():
-        buffer = io.BytesIO()
-        with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-            df.to_excel(writer, index=False, sheet_name='Sheet1')
-        buffer.seek(0)
-        st.download_button(
-            label=f"Unduh {name}",
-            data=buffer.getvalue(),
-            file_name=name,
-            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+}.items():
+    buffer = io.BytesIO()
+    with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Sheet1')
+    buffer.seek(0)
+    st.download_button(
+        label=f"Unduh {name}",
+        data=buffer.getvalue(),
+        file_name=name,
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
