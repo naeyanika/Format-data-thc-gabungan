@@ -146,12 +146,18 @@ if uploaded_files:
     'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
     ]
 
-#Menghapus koma dan titik pada kolom-kolom yang ditentukan
+
+# Menggabungkan semua DataFrame
+combined_df = pd.concat(combined_df_list, ignore_index=True)
+
 for col in columns_to_replace:
     if col in combined_df.columns:
         combined_df[col] = combined_df[col].str.replace(',', '', regex=False)
         combined_df[col] = combined_df[col].str.replace('.', '', regex=False)
 
+
+st.write("Combined DataFrame:")
+st.write(combined_df)
 
 #Download links for pivot tables
 for name, df in {
