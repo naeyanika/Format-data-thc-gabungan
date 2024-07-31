@@ -30,7 +30,8 @@ if uploaded_files:
     
     if 'THC FINAL.xlsx' in dfs:
         df_thc = dfs['THC FINAL.xlsx']
-
+        combined_df_list.append(df_thc)
+        
     if 'TAK.xlsx' in dfs:
         df_tak = dfs['TAK.xlsx']
         new_columns_tak = [
@@ -63,6 +64,7 @@ if uploaded_files:
         df_tak = process_dataframe(df_tak, new_columns_tak, rename_dict_tak, desired_order_tak)
         st.write("TAK FINAL:")
         st.write(df_tak)
+        combined_df_list.append(df_tak)
 
     if 'TLP.xlsx' in dfs:
         df_tlp = dfs['TLP.xlsx']
@@ -98,7 +100,7 @@ if uploaded_files:
         df_tlp = process_dataframe(df_tlp, new_columns_tlp, rename_dict_tlp, desired_order_tlp)
         st.write("TLP FINAL:")
         st.write(df_tlp)
-
+        combined_df_list.append(df_tlp)
 
     if 'KDP.xlsx' in dfs:
         df_kdp = dfs['KDP.xlsx']
@@ -134,7 +136,7 @@ if uploaded_files:
         df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
         st.write("KDP FINAL:")
         st.write(df_kdp)
-
+        combined_df_list.append(df_kdp)
 
 if combined_df_list:
     combined_df = pd.concat(combined_df_list, ignore_index=True)
