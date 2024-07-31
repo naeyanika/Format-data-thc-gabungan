@@ -59,3 +59,6 @@ if uploaded_files:
                 df1[col] = 0
 
             df1 = df1[desired_order]
+            
+    st.write("TAK FINAL:")
+    st.write(df1)
