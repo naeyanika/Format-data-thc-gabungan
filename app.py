@@ -79,7 +79,7 @@ if uploaded_files:
             'CREDIT_Simpanan Sipadan': 'Cr SIPADAN', 'CREDIT_Simpanan Khusus': 'Cr Khusus',
             'CREDIT_TOTAL': 'Cr Total'
         }
-        desired_order_tlp = desired_order_tak  # Sama dengan TAK
+        desired_order_tlp = desired_order_tlp  # Sama dengan TAK
 
         df_tlp = process_dataframe(df_tlp, new_columns_tlp, rename_dict_tlp, desired_order_tlp)
         st.write("TLP FINAL:")
