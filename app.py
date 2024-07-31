@@ -89,12 +89,12 @@ if uploaded_files:
         'CREDIT_Simpanan Khusus'
         ]
 
-for col in new_columns2:
-    if col not in df_tlp.columns:
-        df_tlp[col] = 0
+        for col in new_columns2:
+            if col not in df_tlp.columns:
+                df_tlp[col] = 0
 
         
-    rename_dict = {
+        rename_dict = {
         'KELOMPOK': 'KEL',
         'DEBIT_Simpanan Hari Raya': 'Db Sihara',
         'DEBIT_Simpanan Pensiun': 'Db Pensiun',
