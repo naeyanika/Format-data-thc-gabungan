@@ -190,3 +190,5 @@ else:
                 file_name='Format data THC gabungan.xlsx',
                 mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )
+        except Exception as e:
+            st.error(f"An error occurred while concatenating DataFrames: {e}")
