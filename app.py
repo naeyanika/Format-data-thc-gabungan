@@ -175,18 +175,18 @@ else:
                 if col in combined_df.columns:
                     combined_df[col] = combined_df[col].apply(clean_and_convert)
 
-st.write("Combined DataFrame:")
-st.write(combined_df)
+            st.write("Combined DataFrame:")
+            st.write(combined_df)
 
 # Download links for pivot tables
-buffer = io.BytesIO()
-with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-    combined_df.to_excel(writer, index=False, sheet_name='Sheet1')
-buffer.seek(0)
+            buffer = io.BytesIO()
+            with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+                combined_df.to_excel(writer, index=False, sheet_name='Sheet1')
+            buffer.seek(0)
 
-st.download_button(
-    label="Unduh Format data THC gabungan.xlsx",
-    data=buffer.getvalue(),
-    file_name='Format data THC gabungan.xlsx',
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+            st.download_button(
+                label="Unduh Format data THC gabungan.xlsx",
+                data=buffer.getvalue(),
+                file_name='Format data THC gabungan.xlsx',
+                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                )
