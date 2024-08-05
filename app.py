@@ -171,9 +171,9 @@ else:
                     return value
 
 # Membersihkan dan mengkonversi kolom-kolom yang ditentukan
-for col in columns_to_replace:
-    if col in combined_df.columns:
-        combined_df[col] = combined_df[col].apply(clean_and_convert)
+            for col in columns_to_replace:
+                if col in combined_df.columns:
+                    combined_df[col] = combined_df[col].apply(clean_and_convert)
 
 st.write("Combined DataFrame:")
 st.write(combined_df)
