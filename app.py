@@ -146,19 +146,29 @@ if uploaded_files:
     'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
     ]
 
+if 'combined_df_list' not in locals():
+    st.error("combined_df_list belum didefinisikan.")
+elif not combined_df_list:
+    st.error("combined_df_list kosong.")
+else:
+    # Hapus DataFrame kosong dari daftar
+    combined_df_list = [df for df in combined_df_list if not df.empty]
 
-# Menggabungkan semua DataFrame
-combined_df = pd.concat(combined_df_list, ignore_index=True)
+    if not combined_df_list:
+        st.error("Semua DataFrame dalam daftar kosong.")
+    else:
+        try: # Menggabungkan semua DataFrame
+            combined_df = pd.concat(combined_df_list, ignore_index=True)
 
-# Fungsi untuk membersihkan dan mengkonversi kolom
-def clean_and_convert(value):
-    if pd.isna(value):
-        return value
-    value = str(value).replace(',', '').replace('.', '')
-    try:
-        return pd.to_numeric(value)
-    except ValueError:
-        return value
+            # Fungsi untuk membersihkan dan mengkonversi kolom
+        def clean_and_convert(value):
+            if pd.isna(value):
+                return value
+            value = str(value).replace(',', '').replace('.', '')
+            try:
+                return pd.to_numeric(value)
+            except ValueError:
+                return value
 
 # Membersihkan dan mengkonversi kolom-kolom yang ditentukan
 for col in columns_to_replace:
