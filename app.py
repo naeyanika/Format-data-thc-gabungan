@@ -188,5 +188,4 @@ else:
                 label="Unduh Format data THC gabungan.xlsx",
                 data=buffer.getvalue(),
                 file_name='Format data THC gabungan.xlsx',
-                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                )
+                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
