@@ -161,14 +161,14 @@ else:
             combined_df = pd.concat(combined_df_list, ignore_index=True)
 
             # Fungsi untuk membersihkan dan mengkonversi kolom
-        def clean_and_convert(value):
-            if pd.isna(value):
-                return value
-            value = str(value).replace(',', '').replace('.', '')
-            try:
-                return pd.to_numeric(value)
-            except ValueError:
-                return value
+            def clean_and_convert(value):
+                if pd.isna(value):
+                    return value
+                value = str(value).replace(',', '').replace('.', '')
+                try:
+                    return pd.to_numeric(value)
+                except ValueError:
+                    return value
 
 # Membersihkan dan mengkonversi kolom-kolom yang ditentukan
 for col in columns_to_replace:
