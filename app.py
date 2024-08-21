@@ -6,7 +6,17 @@ import glob
 import os
 
 st.title('Aplikasi Pengolahan THC')
-st.write("Ini digunakan untuk menyatukan file THC FINAL, TAK, TLP dan KDP")
+st.divider()
+st.caption("Ini digunakan untuk menyatukan file THC FINAL, TAK, TLP dan KDP")
+st.caption("Satukan terlebih dahulu file yang _na tadi yang sudah di vlookup, di poin nomer 4 pada site pengolahan")
+st.caption(":red[pivot_TLP_na.xlsx ke TLP.xlsx], :red[pivot_KDP_na.xlsx ke KDP.xlsx]")
+st.divider()
+
+st.subheader("File yang dibutuhkan:")
+st.write("1. THC FINAL.xlsx")
+st.write("2. TAK.xlsx")
+st.write("3. TLP.xlsx")
+st.write("4. KDP.xlsx")
 
 uploaded_files = st.file_uploader("Unggah file Excel", accept_multiple_files=True, type=["xlsx"])
 
