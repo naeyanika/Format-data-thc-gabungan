@@ -115,25 +115,26 @@ if uploaded_files:
     if 'KDP.xlsx' in dfs:
         df_kdp = dfs['KDP.xlsx']
         new_columns_kdp = [
-            'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
-            'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
-            'DEBIT_Simpanan Sipadan', 'DEBIT_Simpanan Khusus', 'CREDIT_Simpanan Pensiun',
-            'CREDIT_Simpanan Pokok', 'CREDIT_Simpanan Sukarela', 'CREDIT_Simpanan Wajib',
-            'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
-            'CREDIT_Simpanan Khusus'
-        ]
+        'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
+        'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
+        'DEBIT_Simpanan Sipadan', 'DEBIT_Simpanan Khusus', 'CREDIT_Simpanan Pensiun',
+        'CREDIT_Simpanan Pokok', 'CREDIT_Simpanan Sukarela', 'CREDIT_Simpanan Wajib',
+        'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
+        'CREDIT_Simpanan Khusus', 'DEBIT_PU', 'CREDIT_PU', 'DEBIT_TOTAL2', 'CREDIT_TOTAL2'
+    ]
         rename_dict_kdp = {
-            'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
-            'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
-            'DEBIT_Simpanan Sukarela': 'Db Sukarela', 'DEBIT_Simpanan Wajib': 'Db Wajib',
-            'DEBIT_Simpanan Qurban': 'Db Qurban', 'DEBIT_Simpanan Sipadan': 'Db SIPADAN',
-            'DEBIT_Simpanan Khusus': 'Db Khusus', 'DEBIT_TOTAL': 'Db Total',
-            'CREDIT_Simpanan Hari Raya': 'Cr Sihara', 'CREDIT_Simpanan Pensiun': 'Cr Pensiun',
-            'CREDIT_Simpanan Pokok': 'Cr Pokok', 'CREDIT_Simpanan Sukarela': 'Cr Sukarela',
-            'CREDIT_Simpanan Wajib': 'Cr Wajib', 'CREDIT_Simpanan Qurban': 'Cr Qurban',
-            'CREDIT_Simpanan Sipadan': 'Cr SIPADAN', 'CREDIT_Simpanan Khusus': 'Cr Khusus',
-            'CREDIT_TOTAL': 'Cr Total'
-        }
+        'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
+        'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
+        'DEBIT_Simpanan Sukarela': 'Db Sukarela', 'DEBIT_Simpanan Wajib': 'Db Wajib',
+        'DEBIT_Simpanan Qurban': 'Db Qurban', 'DEBIT_Simpanan Sipadan': 'Db SIPADAN',
+        'DEBIT_Simpanan Khusus': 'Db Khusus', 'DEBIT_TOTAL': 'Db Total',
+        'CREDIT_Simpanan Hari Raya': 'Cr Sihara', 'CREDIT_Simpanan Pensiun': 'Cr Pensiun',
+        'CREDIT_Simpanan Pokok': 'Cr Pokok', 'CREDIT_Simpanan Sukarela': 'Cr Sukarela',
+        'CREDIT_Simpanan Wajib': 'Cr Wajib', 'CREDIT_Simpanan Qurban': 'Cr Qurban',
+        'CREDIT_Simpanan Sipadan': 'Cr SIPADAN', 'CREDIT_Simpanan Khusus': 'Cr Khusus',
+        'CREDIT_TOTAL': 'Cr Total', 'DEBIT_PU': 'Db PU', 'CREDIT_PU': 'Cr PU',
+        'DEBIT_TOTAL2': 'Db Total2', 'CREDIT_TOTAL2': 'Cr Total2'
+    }
         desired_order_kdp = [
             'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
             'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
