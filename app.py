@@ -113,8 +113,8 @@ if uploaded_files:
         combined_df_list.append(df_tlp)
 
     if 'KDP.xlsx' in dfs:
-        df_kdp = dfs['KDP.xlsx']
-        new_columns_kdp = [
+    df_kdp = dfs['KDP.xlsx']
+    new_columns_kdp = [
         'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
         'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
         'DEBIT_Simpanan Sipadan', 'DEBIT_Simpanan Khusus', 'CREDIT_Simpanan Pensiun',
@@ -122,7 +122,7 @@ if uploaded_files:
         'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
         'CREDIT_Simpanan Khusus', 'DEBIT_PU', 'CREDIT_PU', 'DEBIT_TOTAL2', 'CREDIT_TOTAL2'
     ]
-        rename_dict_kdp = {
+    rename_dict_kdp = {
         'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
         'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
         'DEBIT_Simpanan Sukarela': 'Db Sukarela', 'DEBIT_Simpanan Wajib': 'Db Wajib',
@@ -135,27 +135,34 @@ if uploaded_files:
         'CREDIT_TOTAL': 'Cr Total', 'DEBIT_PU': 'Db PU', 'CREDIT_PU': 'Cr PU',
         'DEBIT_TOTAL2': 'Db Total2', 'CREDIT_TOTAL2': 'Cr Total2'
     }
-        desired_order_kdp = [
-            'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
-            'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
-            'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
-            'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
-            'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
-            'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
-        ]
-
-        df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
-        st.write("KDP FINAL:")
-        st.write(df_kdp)
-        combined_df_list.append(df_kdp)
-
-    columns_to_replace = [
-    'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
-    'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
-    'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
-    'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
-    'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
+    desired_order_kdp = [
+        'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
+        'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
+        'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
+        'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
+        'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
+        'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
     ]
+
+    # Proses dataframe
+    df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
+
+    # Menggabungkan data duplikat dan menjumlahkan nilai numerik
+    key_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE']
+    numeric_columns = [col for col in desired_order_kdp if col not in key_columns]
+    df_kdp = df_kdp.groupby(key_columns, as_index=False)[numeric_columns].sum()
+
+    # Memastikan semua kolom yang diperlukan ada
+    for col in desired_order_kdp:
+        if col not in df_kdp.columns:
+            df_kdp[col] = 0
+
+    # Mengurutkan kolom
+    df_kdp = df_kdp[desired_order_kdp]
+
+    st.write("KDP FINAL:")
+    st.write(df_kdp)
+    combined_df_list.append(df_kdp)
 
 if 'combined_df_list' not in locals():
     st.error("combined_df_list belum didefinisikan.")
