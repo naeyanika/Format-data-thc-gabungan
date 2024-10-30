@@ -162,7 +162,7 @@ if uploaded_files:
 
             st.write("KDP FINAL:")
             st.write(df_kdp)
-            combined_df_list.append(df_kdp)
+        combined_df_list.append(df_kdp)
 
 if 'combined_df_list' not in locals():
     st.error("combined_df_list belum didefinisikan.")
