@@ -145,24 +145,24 @@ if uploaded_files:
     ]
 
     # Proses dataframe
-    df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
+        df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
 
     # Menggabungkan data duplikat dan menjumlahkan nilai numerik
-    key_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE']
-    numeric_columns = [col for col in desired_order_kdp if col not in key_columns]
-    df_kdp = df_kdp.groupby(key_columns, as_index=False)[numeric_columns].sum()
+        key_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE']
+        numeric_columns = [col for col in desired_order_kdp if col not in key_columns]
+        df_kdp = df_kdp.groupby(key_columns, as_index=False)[numeric_columns].sum()
 
     # Memastikan semua kolom yang diperlukan ada
-    for col in desired_order_kdp:
-        if col not in df_kdp.columns:
-            df_kdp[col] = 0
+        for col in desired_order_kdp:
+            if col not in df_kdp.columns:
+                df_kdp[col] = 0
 
     # Mengurutkan kolom
-    df_kdp = df_kdp[desired_order_kdp]
+        df_kdp = df_kdp[desired_order_kdp]
 
-    st.write("KDP FINAL:")
-    st.write(df_kdp)
-    combined_df_list.append(df_kdp)
+        st.write("KDP FINAL:")
+        st.write(df_kdp)
+        combined_df_list.append(df_kdp)
 
 if 'combined_df_list' not in locals():
     st.error("combined_df_list belum didefinisikan.")
