@@ -124,10 +124,11 @@ if uploaded_files:
         st.write(df_tlp)
         combined_df_list.append(df_tlp)
 
-    # Proses KDP
+# Proses KDP
     if 'KDP.xlsx' in dfs:
         df_kdp = dfs['KDP.xlsx']
-        # Definisi kolom dan konfigurasi untuk KDP
+    
+    # Definisi kolom dan konfigurasi
         new_columns_kdp = [
         'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
         'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
@@ -136,6 +137,7 @@ if uploaded_files:
         'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
         'CREDIT_Simpanan Khusus', 'DEBIT_PU', 'CREDIT_PU', 'DEBIT_TOTAL2', 'CREDIT_TOTAL2'
     ]
+    
         rename_dict_kdp = {
         'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
         'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
@@ -149,6 +151,7 @@ if uploaded_files:
         'CREDIT_TOTAL': 'Cr Total', 'DEBIT_PU': 'Db PU', 'CREDIT_PU': 'Cr PU',
         'DEBIT_TOTAL2': 'Db Total2', 'CREDIT_TOTAL2': 'Cr Total2'
     }
+    
         desired_order_kdp = [
         'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
         'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
@@ -157,47 +160,30 @@ if uploaded_files:
         'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
         'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
     ]
-        
-        # 1. Proses awal dataframe
+
+    # 1. Proses dataframe dasar
         df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
-    
-    # 2. Konversi tipe data untuk kolom string
-        string_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL']
-        for col in string_columns:
-            if col in df_kdp.columns:
-                df_kdp[col] = df_kdp[col].astype(str)
-    
-    # 3. Konversi tipe data untuk tanggal
-        if 'TRANS. DATE' in df_kdp.columns:
-            df_kdp['TRANS. DATE'] = pd.to_datetime(df_kdp['TRANS. DATE'])
-    
-    # 4. Konversi tipe data untuk kolom numerik
+
+    # 2. Definisi kolom kunci
         key_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE']
-        numeric_columns = [col for col in df_kdp.columns if col not in key_columns]
-    
-        for col in numeric_columns:
-            df_kdp[col] = pd.to_numeric(df_kdp[col], errors='coerce').fillna(0)
-    
-    # 5. Groupby dan agregasi
+        numeric_columns = [col for col in desired_order_kdp if col not in key_columns]
+
+    # 3. Konversi tipe data dasar
+        df_kdp[numeric_columns] = df_kdp[numeric_columns].apply(pd.to_numeric, errors='coerce').fillna(0)
+
+    # 4. Groupby dan agregasi
         df_kdp = df_kdp.groupby(key_columns, as_index=False)[numeric_columns].sum()
-    
-    # 6. Pastikan semua kolom yang diperlukan ada
-        for col in desired_order_kdp:
-            if col not in df_kdp.columns:
-                df_kdp[col] = 0
-    
-    # 7. Urutkan kolom final
+
+    # 5. Urutkan kolom final
         df_kdp = df_kdp[desired_order_kdp]
-    
-    # 8. Tampilkan hasil
+
+    # 6. Tampilkan hasil
         try:
             st.write("KDP FINAL:")
             st.write(df_kdp)
             combined_df_list.append(df_kdp)
         except Exception as e:
             st.error(f"Error saat menampilkan data: {str(e)}")
-            st.write("Preview data (5 baris pertama):")
-            st.write(df_kdp.head())
 
 # Proses penggabungan final
 if 'combined_df_list' not in locals():
