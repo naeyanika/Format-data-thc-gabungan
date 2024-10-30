@@ -113,8 +113,8 @@ if uploaded_files:
         combined_df_list.append(df_tlp)
 
     if 'KDP.xlsx' in dfs:
-    df_kdp = dfs['KDP.xlsx']
-    new_columns_kdp = [
+        df_kdp = dfs['KDP.xlsx']
+        new_columns_kdp = [
         'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
         'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
         'DEBIT_Simpanan Sipadan', 'DEBIT_Simpanan Khusus', 'CREDIT_Simpanan Pensiun',
@@ -122,7 +122,7 @@ if uploaded_files:
         'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
         'CREDIT_Simpanan Khusus', 'DEBIT_PU', 'CREDIT_PU', 'DEBIT_TOTAL2', 'CREDIT_TOTAL2'
     ]
-    rename_dict_kdp = {
+        rename_dict_kdp = {
         'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
         'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
         'DEBIT_Simpanan Sukarela': 'Db Sukarela', 'DEBIT_Simpanan Wajib': 'Db Wajib',
@@ -135,7 +135,7 @@ if uploaded_files:
         'CREDIT_TOTAL': 'Cr Total', 'DEBIT_PU': 'Db PU', 'CREDIT_PU': 'Cr PU',
         'DEBIT_TOTAL2': 'Db Total2', 'CREDIT_TOTAL2': 'Cr Total2'
     }
-    desired_order_kdp = [
+        desired_order_kdp = [
         'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
         'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
         'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
