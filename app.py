@@ -160,9 +160,9 @@ if uploaded_files:
     # Mengurutkan kolom
         df_kdp = df_kdp[desired_order_kdp]
 
-        st.write("KDP FINAL:")
-        st.write(df_kdp)
-        combined_df_list.append(df_kdp)
+            st.write("KDP FINAL:")
+            st.write(df_kdp)
+            combined_df_list.append(df_kdp)
 
 if 'combined_df_list' not in locals():
     st.error("combined_df_list belum didefinisikan.")
