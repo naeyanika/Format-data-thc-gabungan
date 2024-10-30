@@ -158,26 +158,46 @@ if uploaded_files:
         'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
     ]
         
-        # Proses dataframe KDP
+        # 1. Proses awal dataframe
         df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
-        
-        # Definisi kolom kunci dan numerik
+    
+    # 2. Konversi tipe data untuk kolom string
+        string_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL']
+        for col in string_columns:
+            if col in df_kdp.columns:
+                df_kdp[col] = df_kdp[col].astype(str)
+    
+    # 3. Konversi tipe data untuk tanggal
+        if 'TRANS. DATE' in df_kdp.columns:
+            df_kdp['TRANS. DATE'] = pd.to_datetime(df_kdp['TRANS. DATE'])
+    
+    # 4. Konversi tipe data untuk kolom numerik
         key_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE']
-        numeric_columns = [col for col in desired_order_kdp if col not in key_columns]
-        
-        # Pastikan semua kolom ada sebelum groupby
+        numeric_columns = [col for col in df_kdp.columns if col not in key_columns]
+    
+        for col in numeric_columns:
+            df_kdp[col] = pd.to_numeric(df_kdp[col], errors='coerce').fillna(0)
+    
+    # 5. Groupby dan agregasi
+        df_kdp = df_kdp.groupby(key_columns, as_index=False)[numeric_columns].sum()
+    
+    # 6. Pastikan semua kolom yang diperlukan ada
         for col in desired_order_kdp:
             if col not in df_kdp.columns:
                 df_kdp[col] = 0
-        
-        # Groupby dan sum
-        df_kdp = df_kdp.groupby(key_columns, as_index=False)[numeric_columns].sum()
-        
-        # Urutkan kolom final
+    
+    # 7. Urutkan kolom final
         df_kdp = df_kdp[desired_order_kdp]
-        st.write("KDP FINAL:")
-        st.write(df_kdp)
-        combined_df_list.append(df_kdp)
+    
+    # 8. Tampilkan hasil
+        try:
+            st.write("KDP FINAL:")
+            st.write(df_kdp)
+            combined_df_list.append(df_kdp)
+        except Exception as e:
+            st.error(f"Error saat menampilkan data: {str(e)}")
+            st.write("Preview data (5 baris pertama):")
+            st.write(df_kdp.head())
 
 # Proses penggabungan final
 if 'combined_df_list' not in locals():
