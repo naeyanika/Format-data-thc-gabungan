@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import io
+import glob
+import os
 
 st.title('Aplikasi Pengolahan THC')
 st.divider()
@@ -36,7 +38,6 @@ if uploaded_files:
 
     combined_df_list = []
     
-    # Process each file (assuming all files might not be available)
     if 'THC FINAL.xlsx' in dfs:
         df_thc = dfs['THC FINAL.xlsx']
         combined_df_list.append(df_thc)
@@ -69,6 +70,7 @@ if uploaded_files:
             'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
             'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
         ]
+        
         df_tak = process_dataframe(df_tak, new_columns_tak, rename_dict_tak, desired_order_tak)
         st.write("TAK FINAL:")
         st.write(df_tak)
@@ -113,98 +115,90 @@ if uploaded_files:
     if 'KDP.xlsx' in dfs:
         df_kdp = dfs['KDP.xlsx']
         new_columns_kdp = [
-        'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
-        'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
-        'DEBIT_Simpanan Sipadan', 'DEBIT_Simpanan Khusus', 'CREDIT_Simpanan Pensiun',
-        'CREDIT_Simpanan Pokok', 'CREDIT_Simpanan Sukarela', 'CREDIT_Simpanan Wajib',
-        'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
-        'CREDIT_Simpanan Khusus', 'DEBIT_PU', 'CREDIT_PU', 'DEBIT_TOTAL2', 'CREDIT_TOTAL2'
-    ]
+            'DEBIT_Simpanan Pensiun', 'DEBIT_Simpanan Pokok', 'DEBIT_Simpanan Sukarela',
+            'DEBIT_Simpanan Wajib', 'DEBIT_Simpanan Hari Raya', 'DEBIT_Simpanan Qurban',
+            'DEBIT_Simpanan Sipadan', 'DEBIT_Simpanan Khusus', 'CREDIT_Simpanan Pensiun',
+            'CREDIT_Simpanan Pokok', 'CREDIT_Simpanan Sukarela', 'CREDIT_Simpanan Wajib',
+            'CREDIT_Simpanan Hari Raya', 'CREDIT_Simpanan Qurban', 'CREDIT_Simpanan Sipadan',
+            'CREDIT_Simpanan Khusus'
+        ]
         rename_dict_kdp = {
-        'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
-        'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
-        'DEBIT_Simpanan Sukarela': 'Db Sukarela', 'DEBIT_Simpanan Wajib': 'Db Wajib',
-        'DEBIT_Simpanan Qurban': 'Db Qurban', 'DEBIT_Simpanan Sipadan': 'Db SIPADAN',
-        'DEBIT_Simpanan Khusus': 'Db Khusus', 'DEBIT_TOTAL': 'Db Total',
-        'CREDIT_Simpanan Hari Raya': 'Cr Sihara', 'CREDIT_Simpanan Pensiun': 'Cr Pensiun',
-        'CREDIT_Simpanan Pokok': 'Cr Pokok', 'CREDIT_Simpanan Sukarela': 'Cr Sukarela',
-        'CREDIT_Simpanan Wajib': 'Cr Wajib', 'CREDIT_Simpanan Qurban': 'Cr Qurban',
-        'CREDIT_Simpanan Sipadan': 'Cr SIPADAN', 'CREDIT_Simpanan Khusus': 'Cr Khusus',
-        'CREDIT_TOTAL': 'Cr Total', 'DEBIT_PU': 'Db PU', 'CREDIT_PU': 'Cr PU',
-        'DEBIT_TOTAL2': 'Db Total2', 'CREDIT_TOTAL2': 'Cr Total2'
-    }
+            'KELOMPOK': 'KEL', 'DEBIT_Simpanan Hari Raya': 'Db Sihara',
+            'DEBIT_Simpanan Pensiun': 'Db Pensiun', 'DEBIT_Simpanan Pokok': 'Db Pokok',
+            'DEBIT_Simpanan Sukarela': 'Db Sukarela', 'DEBIT_Simpanan Wajib': 'Db Wajib',
+            'DEBIT_Simpanan Qurban': 'Db Qurban', 'DEBIT_Simpanan Sipadan': 'Db SIPADAN',
+            'DEBIT_Simpanan Khusus': 'Db Khusus', 'DEBIT_TOTAL': 'Db Total',
+            'CREDIT_Simpanan Hari Raya': 'Cr Sihara', 'CREDIT_Simpanan Pensiun': 'Cr Pensiun',
+            'CREDIT_Simpanan Pokok': 'Cr Pokok', 'CREDIT_Simpanan Sukarela': 'Cr Sukarela',
+            'CREDIT_Simpanan Wajib': 'Cr Wajib', 'CREDIT_Simpanan Qurban': 'Cr Qurban',
+            'CREDIT_Simpanan Sipadan': 'Cr SIPADAN', 'CREDIT_Simpanan Khusus': 'Cr Khusus',
+            'CREDIT_TOTAL': 'Cr Total'
+        }
         desired_order_kdp = [
-        'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
-        'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
-        'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
-        'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
-        'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
-        'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
-    ]
+            'ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE',
+            'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
+            'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
+            'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
+            'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
+            'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
+        ]
 
-
-        # Proses dataframe
         df_kdp = process_dataframe(df_kdp, new_columns_kdp, rename_dict_kdp, desired_order_kdp)
-
-    # Menggabungkan data duplikat dan menjumlahkan nilai numerik
-        key_columns = ['ID ANGGOTA', 'DUMMY', 'NAMA', 'CENTER', 'KEL', 'HARI', 'JAM', 'SL', 'TRANS. DATE']
-        numeric_columns = [col for col in desired_order_kdp if col not in key_columns]
-        df_kdp = df_kdp.groupby(key_columns, as_index=False)[numeric_columns].sum()
-
-    # Memastikan semua kolom yang diperlukan ada
-        for col in desired_order_kdp:
-            if col not in df_kdp.columns:
-                df_kdp[col] = 0
-
-    # Mengurutkan kolom
-        df_kdp = df_kdp[desired_order_kdp]
         st.write("KDP FINAL:")
         st.write(df_kdp)
         combined_df_list.append(df_kdp)
 
-    if combined_df_list:
-        # Remove any empty DataFrames
-        combined_df_list = [df for df in combined_df_list if not df.empty]
+    columns_to_replace = [
+    'Db Qurban', 'Cr Qurban', 'Db Khusus', 'Cr Khusus', 'Db Sihara', 'Cr Sihara',
+    'Db Pensiun', 'Cr Pensiun', 'Db Pokok', 'Cr Pokok', 'Db SIPADAN', 'Cr SIPADAN',
+    'Db Sukarela', 'Cr Sukarela', 'Db Wajib', 'Cr Wajib', 'Db Total', 'Cr Total',
+    'Db PTN', 'Cr PTN', 'Db PRT', 'Cr PRT', 'Db DTP', 'Cr DTP', 'Db PMB', 'Cr PMB',
+    'Db PRR', 'Cr PRR', 'Db PSA', 'Cr PSA', 'Db PU', 'Cr PU', 'Db Total2', 'Cr Total2'
+    ]
 
-        if combined_df_list:
-            try:
-                # Concatenate the DataFrames
-                combined_df = pd.concat(combined_df_list, ignore_index=True)
+if 'combined_df_list' not in locals():
+    st.error("combined_df_list belum didefinisikan.")
+elif not combined_df_list:
+    st.error("combined_df_list kosong.")
+else:
+    # Hapus DataFrame kosong dari daftar
+    combined_df_list = [df for df in combined_df_list if not df.empty]
 
-                # Check for missing column definition
-                if 'columns_to_replace' in locals():
-                    # Convert values in columns_to_replace
-                    def clean_and_convert(value):
-                        if pd.isna(value):
-                            return value
-                        value = str(value).replace(',', '').replace('.', '')
-                        try:
-                            return pd.to_numeric(value)
-                        except ValueError:
-                            return value
-                    
-                    for col in columns_to_replace:
-                        if col in combined_df.columns:
-                            combined_df[col] = combined_df[col].apply(clean_and_convert)
-
-                st.write("Combined DataFrame:")
-                st.write(combined_df)
-
-                # Provide download link
-                buffer = io.BytesIO()
-                with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-                    combined_df.to_excel(writer, index=False, sheet_name='Sheet1')
-                buffer.seek(0)
-
-                st.download_button(
-                    label="Unduh Format data THC gabungan.xlsx",
-                    data=buffer.getvalue(),
-                    file_name='Format data THC gabungan.xlsx',
-                    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                )
-            except Exception as e:
-                st.error(f"An error occurred while concatenating DataFrames: {e}")
-        else:
-            st.error("All DataFrames are empty.")
+    if not combined_df_list:
+        st.error("Semua DataFrame dalam daftar kosong.")
     else:
-        st.error("No valid DataFrames to process.")
+        try: # Menggabungkan semua DataFrame
+            combined_df = pd.concat(combined_df_list, ignore_index=True)
+
+            # Fungsi untuk membersihkan dan mengkonversi kolom
+            def clean_and_convert(value):
+                if pd.isna(value):
+                    return value
+                value = str(value).replace(',', '').replace('.', '')
+                try:
+                    return pd.to_numeric(value)
+                except ValueError:
+                    return value
+
+# Membersihkan dan mengkonversi kolom-kolom yang ditentukan
+            for col in columns_to_replace:
+                if col in combined_df.columns:
+                    combined_df[col] = combined_df[col].apply(clean_and_convert)
+
+            st.write("Combined DataFrame:")
+            st.write(combined_df)
+
+# Download links for pivot tables
+            buffer = io.BytesIO()
+            with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+                combined_df.to_excel(writer, index=False, sheet_name='Sheet1')
+            buffer.seek(0)
+
+            st.download_button(
+                label="Unduh Format data THC gabungan.xlsx",
+                data=buffer.getvalue(),
+                file_name='Format data THC gabungan.xlsx',
+                mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            )
+        except Exception as e:
+            st.error(f"An error occurred while concatenating DataFrames: {e}")
