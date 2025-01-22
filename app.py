@@ -196,7 +196,7 @@ if uploaded_files:
     ]
 
 if 'combined_df_list' not in locals():
-    st.error("combined_df_list belum didefinisikan.")
+    st.error("Harap Upload File Yang Sesuai Instruksi.")
 elif not combined_df_list:
     st.error("combined_df_list kosong.")
 else:
