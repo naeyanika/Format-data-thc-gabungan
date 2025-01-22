@@ -18,6 +18,45 @@ st.write("2. TAK.xlsx")
 st.write("3. TLP.xlsx")
 st.write("4. KDP.xlsx")
 
+
+@st.cache_data
+def load_excel_file(file):
+    return pd.read_excel(file, engine='openpyxl')
+
+@st.cache_data
+def process_dataframe(df, new_columns, rename_dict, desired_order):
+    df = df.copy()  # Create a copy to avoid modifying the original
+    for col in new_columns:
+        if col not in df.columns:
+            df[col] = 0
+    
+    df = df.rename(columns=rename_dict)
+    
+    for col in desired_order:
+        if col not in df.columns:
+            df[col] = 0
+    
+    return df[desired_order]
+
+@st.cache_data
+def clean_and_convert(df, columns_to_replace):
+    df = df.copy()
+    
+    def clean_value(value):
+        if pd.isna(value):
+            return value
+        value = str(value).replace(',', '').replace('.', '')
+        try:
+            return pd.to_numeric(value)
+        except ValueError:
+            return value
+    
+    for col in columns_to_replace:
+        if col in df.columns:
+            df[col] = df[col].apply(clean_value)
+    
+    return df
+    
 uploaded_files = st.file_uploader("Unggah file Excel", accept_multiple_files=True, type=["xlsx"])
 
 if uploaded_files:
